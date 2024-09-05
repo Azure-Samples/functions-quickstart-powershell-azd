@@ -1,6 +1,6 @@
 ---
 name: "Azure Functions PowerShell HTTP Trigger using AZD"
-description: This repository contains an Azure Functions HTTP trigger quickstart written in PowerShell and deployed to Azure Functions Flex Consumption using the Azure Developer CLI (AZD). This sample uses managed identity and a virtual network to insure it is secure by default.
+description: This repository contains an Azure Functions HTTP trigger quickstart written in PowerShell and deployed to Azure Functions Flex Consumption using the Azure Developer CLI (AZD). This sample uses managed identity and a virtual network to insure it's secure by default.
 page_type: sample
 languages:
 - powershell
@@ -62,7 +62,7 @@ Navigate to the `src` app folder and create a file in that folder named _local.s
 
 ## Run your app from the terminal
 
-1. From the `src` flwdepRun this commands to start the Functions host locally:
+1. From the `src` folder, run this command to start the Functions host locally:
 
     ```shell
     func start
@@ -70,7 +70,7 @@ Navigate to the `src` app folder and create a file in that folder named _local.s
 
 1. From your HTTP test tool in a new terminal (or from your browser), call the HTTP GET endpoint: <http://localhost:7071/api/httpget>
 
-1. Test the HTTP POST trigger with a payload using your favorite secure HTTP test tool. This example uses the `Invoke-RestMethod` cmdlet in PowerShell with payload data from the [`testdata.json`](./src/functions/testdata.json) project file:
+1. Test the HTTP POST trigger with a payload using your favorite secure HTTP test tool. This example runs from the `src` folder and uses the `Invoke-RestMethod` cmdlet in PowerShell with payload data from the [`testdata.json`](./src/functions/testdata.json) project file:
 
     ```powershell
     Invoke-RestMethod -Uri http://localhost:7071/api/httppost -Method Post -ContentType "application/json" -InFile "testdata.json"
