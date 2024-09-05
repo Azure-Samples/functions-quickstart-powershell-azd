@@ -3,7 +3,9 @@ name: "Azure Functions PowerShell HTTP Trigger using AZD"
 description: This repository contains an Azure Functions HTTP trigger quickstart written in PowerShell and deployed to Azure Functions Flex Consumption using the Azure Developer CLI (AZD). This sample uses managed identity and a virtual network to insure it is secure by default.
 page_type: sample
 languages:
-- PowerShell
+- powershell
+- bicep
+- azdeveloper
 products:
 - azure
 - azure-functions
@@ -13,63 +15,81 @@ urlFragment: functions-quickstart-powershell-azd
 
 # Azure Functions PowerShell HTTP Trigger using AZD
 
-This repository contains a Azure Functions HTTP trigger quickstart written in PowerShell and deployed to Azure using Azure Developer CLI (AZD). This sample uses managed identity and a virtual network to insure it is secure by default. 
-
-## Getting Started
+This repository contains an Azure Functions HTTP trigger reference sample written in PowerShell and deployed to Azure using Azure Developer CLI (`azd`). The sample uses managed identity and a virtual network to make sure deployment is secure by default.
 
 ### Prerequisites
 
-1) [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.4) 
-2) [Azure Functions Core Tools](https://learn.microsoft.com/azure/azure-functions/functions-run-local?tabs=v4%2Cmacos%2Ccsharp%2Cportal%2Cbash#install-the-azure-functions-core-tools)
-3) [Azure Developer CLI (AZD)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd)
-4) [Visual Studio Code](https://code.visualstudio.com/) - Only required if using VS Code to run locally
++ [PowerShell 7.4](https://learn.microsoft.com/powershell/scripting/install/installing-powershell?view=powershell-7.4) 
++ [Azure Functions Core Tools](https://learn.microsoft.com/azure/azure-functions/functions-run-local?pivots=programming-language-powershell#install-the-azure-functions-core-tools)
++ [Azure Developer CLI (`azd`)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd)
++ To use Visual Studio Code to run and debug locally:
+  + [Visual Studio Code](https://code.visualstudio.com/)
+  + [Azure Functions extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
 
-### Get repo on your local machine
-Run the following GIT command to clone this repository to your local machine.
-```bash
-git clone https://github.com/Azure-Samples/functions-quickstart-powershell-azd.git
-```
+## Initialize the local project
 
-## Run on your local environment
+You can initialize a project from this `azd` template in one of these ways:
 
-### Prepare your local environment
-1) Create a file named `local.settings.json` and add the following:
++ Use this `azd init` command from an empty local (root) folder:
+
+    ```powershell
+    azd init --template functions-quickstart-javascript-azd
+    ```
+
+    Supply an environment name, such as `flexquickstart` when prompted. In `azd`, the environment is used to maintain a unique deployment context for your app.
+
++ Clone the GitHub template repository locally using the `git clone` command:
+
+    ```powershell
+    git clone https://github.com/Azure-Samples/functions-quickstart-powershell-azd.git
+    cd functions-quickstart-powershell-azd
+    ```
+
+## Prepare your local environment
+
+Add a file named `local.settings.json` in the root of your project with the following contents:
+
 ```json
 {
   "IsEncrypted": false,
   "Values": {
-    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "FUNCTIONS_WORKER_RUNTIME": "powershell"
+    "FUNCTIONS_WORKER_RUNTIME": "powershell",
+    "FUNCTIONS_WORKER_RUNTIME_VERSION": "7.4",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true"
   }
 }
 ```
 
-### Using Functions CLI
-1) Open this folder in a new terminal and run the following commands:
+## Run your app from the terminal
 
-```bash
-func start
-```
+1. Run this commands to start the Functions host locally:
 
-2) Test the HTTP GET trigger using the browser to open http://localhost:7071/api/httpGetFunction
+    ```shell
+    func start
+    ```
 
-3) Test the HTTP POST trigger in a new terminal window with the following command, or use your favorite REST client, e.g. [RestClient in VS Code](https://marketplace.visualstudio.com/items?itemName=humao.rest-client), PostMan, curl. `test.http` has been provided to run this quickly.
+1. From your HTTP test tool in a new terminal (or from your browser), call the HTTP GET endpoint: <http://localhost:7071/api/httpget>
 
-```bash
-curl -i -X POST http://localhost:7071/api/httppostbodyfunction -H "Content-Type: text/json" --data-binary "@src/testdata.json"
-```
+1. Test the HTTP POST trigger with a payload using your favorite secure HTTP test tool. This example uses the `Invoke-RestMethod` cmdlet in PowerShell with payload data from the [`testdata.json`](./src/functions/testdata.json) project file:
 
-### Using Visual Studio Code
-1) Open this folder in a new terminal
-2) Open VS Code by entering `code .` in the terminal
-3) Make sure the [Azure Functions extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions) is installed
-4) Add required files to the `.vscode` folder by opening the command palette using `Crtl+Shift+P` (or `Cmd+Shift+P` on Mac) and selecting *"Azure Functions: Initialize project for use with VS Code"*
-5) Press Run/Debug (F5) to run in the debugger (select "Debug anyway" if prompted about local emulater not running) 
-6) Use same approach above to test using an HTTP REST client
+    ```powershell
+    Invoke-RestMethod -Uri http://localhost:7071/api/httppost -Method Post -ContentType "application/json" -InFile "testdata.json"
+    ```
+
+1. When you're done, press Ctrl+C in the terminal window to stop the `func.exe` host process.
+
+## Run your app using Visual Studio Code
+
+1. Open the root folder in a new terminal.
+1. Run the `code .` code command to open the project in Visual Studio Code.
+1. Press **Run/Debug (F5)** to run in the debugger. Select **Debug anyway** if prompted about local emulator not running.
+1. Send GET and POST requests to the `httpget` and `httppost` endpoints respectively using your HTTP test tool (or browser for `httpget`). If you have the [RestClient](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) extension installed, you can execute requests directly from the [`test.http`](./src/functions/test.http) project file.
 
 ## Source Code
 
-The key code that makes these functions work is in `./src/httpGetFunction` and `.src/httpPostBodyFunction`.  The function is identified as an Azure Function by use of the `@azure/functions` library. This code shows a HTTP GET triggered function.  
+The code that implements the function logic is maintained in `./src/httpGetFunction` and `.src/httpPostBodyFunction` function folders.
+
+The `httpget` function endpoint is defined in [`function.json`](./src/httpGetFunction/function.json), with this code in the [`run.ps1`](./src/httpGetFunction/run.ps1) file:  
 
 ```powershell
 using namespace System.Net
@@ -95,7 +115,8 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
     Body = $body
 })
 ```
-This code shows a HTTP POST triggered function which expects a  `name` value in the request.
+
+The `httppost` function endpoint is defined in [`function.json`](./src/httpPostBodyFunction/function.json), with this code in the [`run.ps1`](./src/httpPostBodyFunction/run.ps1) file:
 
 ```powershell
 using namespace System.Net
@@ -108,24 +129,54 @@ Write-Host "PowerShell HTTP trigger function processed a request."
 
 # Interact with the body of the request.
 $name = $Request.Body.name
+$age = $Request.Body.age
+$status = [HttpStatusCode]::OK
 
 $body = "This HTTP triggered function executed successfully. Pass a name in the request body for a personalized response."
 
-if ($name) {
-    $body = "Hello, $name. This HTTP triggered function executed successfully."
+if ( -not ($name -and $age)){
+    $body = "Please provide both 'name' and 'age' in the request body."
+    $status = [HttpStatusCode]::BadRequest
+}
+else {
+    <# Action when all if and elseif conditions are false #>
+    $body = "Hello, ${name}! You are ${age} years old."
 }
 
 # Associate values to output bindings by calling 'Push-OutputBinding'.
 Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
-    StatusCode = [HttpStatusCode]::OK
+    StatusCode = $status
     Body = $body
 })
 ```
 
 ## Deploy to Azure
 
-To provision the dependent resources and deploy the Function app run the following command:
-```bash
+Run this command to provision the function app, with any required Azure resources, and deploy your code:
+
+```shell
 azd up
 ```
-You will be prompted for an environment name (this is a friendly name for storing AZD parameters), a Azure subscription, and an Aure location.
+
+You're prompted to supply these required deployment parameters:
+
+| Parameter | Description |
+| ---- | ---- |
+| _Environment name_ | An environment that's used to maintain a unique deployment context for your app. You won't be prompted if you created the local project using `azd init`.|
+| _Azure subscription_ | Subscription in which your resources are created.|
+| _Azure location_ | Azure region in which to create the resource group that contains the new Azure resources. Only regions that currently support the Flex Consumption plan are shown.|
+
+## Redeploy your code
+
+You can run the `azd up` command as many times as you need to both provision your Azure resources and deploy code updates to your function app.
+
+>[!NOTE]
+>Deployed code files are always overwritten by the latest deployment package.
+
+## Clean up resources
+
+When you're done working with your function app and related resources, you can use this command to delete the function app and its related resources from Azure and avoid incurring any further costs:
+
+```shell
+azd down
+```

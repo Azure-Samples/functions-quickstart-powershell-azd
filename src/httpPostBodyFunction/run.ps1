@@ -14,7 +14,7 @@ $status = [HttpStatusCode]::OK
 $body = "This HTTP triggered function executed successfully. Pass a name in the request body for a personalized response."
 
 if ( -not ($name -and $age)){
-    $body = "Please provide both name and age in the request body."
+    $body = "Please provide both 'name' and 'age' in the request body."
     $status = [HttpStatusCode]::BadRequest
 }
 else {
