@@ -47,7 +47,7 @@ You can initialize a project from this `azd` template in one of these ways:
 
 ## Prepare your local environment
 
-Add a file named `local.settings.json` in the root of your project with the following contents:
+Navigate to the `src` app folder and create a file in that folder named _local.settings.json_ that contains this JSON data:
 
 ```json
 {
@@ -62,7 +62,7 @@ Add a file named `local.settings.json` in the root of your project with the foll
 
 ## Run your app from the terminal
 
-1. Run this commands to start the Functions host locally:
+1. From the `src` flwdepRun this commands to start the Functions host locally:
 
     ```shell
     func start
