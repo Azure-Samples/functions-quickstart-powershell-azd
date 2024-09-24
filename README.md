@@ -35,7 +35,7 @@ You can initialize a project from this `azd` template in one of these ways:
 + Use this `azd init` command from an empty local (root) folder:
 
     ```powershell
-    azd init --template functions-quickstart-javascript-azd
+    azd init --template functions-quickstart-powershell-azd
     ```
 
     Supply an environment name, such as `flexquickstart` when prompted. In `azd`, the environment is used to maintain a unique deployment context for your app.
