@@ -72,7 +72,7 @@ Navigate to the `src` app folder and create a file in that folder named _local.s
 
 1. From your HTTP test tool in a new terminal (or from your browser), call the HTTP GET endpoint: <http://localhost:7071/api/httpget>
 
-1. Test the HTTP POST trigger with a payload using your favorite secure HTTP test tool. This example runs from the `src` folder and uses the `Invoke-RestMethod` cmdlet in PowerShell with payload data from the [`testdata.json`](./src/functions/testdata.json) project file:
+1. Test the HTTP POST trigger with a payload using your favorite secure HTTP test tool. This example runs from the `src` folder and uses the `Invoke-RestMethod` cmdlet in PowerShell with payload data from the [`testdata.json`](./src/testdata.json) project file:
 
     ```powershell
     Invoke-RestMethod -Uri http://localhost:7071/api/httppost -Method Post -ContentType "application/json" -InFile "testdata.json"
