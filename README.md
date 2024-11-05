@@ -1,3 +1,4 @@
+<!--
 ---
 name: "Azure Functions PowerShell HTTP Trigger using AZD"
 description: This repository contains an Azure Functions HTTP trigger quickstart written in PowerShell and deployed to Azure Functions Flex Consumption using the Azure Developer CLI (AZD). This sample uses managed identity and a virtual network to insure it's secure by default.
@@ -12,6 +13,7 @@ products:
 - entra-id
 urlFragment: functions-quickstart-powershell-azd
 ---
+-->
 
 # Azure Functions PowerShell HTTP Trigger using AZD
 
