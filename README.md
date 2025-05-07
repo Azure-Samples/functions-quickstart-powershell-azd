@@ -162,6 +162,13 @@ Run this command to provision the function app, with any required Azure resource
 azd up
 ```
 
+By default, this sample uses a virtual network to ensure your deployment is secure by default. You can opt-out of a VNet being used by setting VNET_ENABLED to false before running `azd up`:
+
+```bash
+azd env set VNET_ENABLED false
+azd up
+```
+
 You're prompted to supply these required deployment parameters:
 
 | Parameter | Description |

@@ -2,7 +2,7 @@
 
 name: functions-quickstart-powershell-azd
 metadata:
-  template: functions-quickstart-powershell-azd@0.0.2-beta
+  template: functions-quickstart-powershell-azd@1.0.1
 hooks:
     postprovision:
       windows:
