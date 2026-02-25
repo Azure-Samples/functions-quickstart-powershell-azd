@@ -24,6 +24,7 @@ This source code supports the article [Quickstart: Create and deploy functions t
 ### Prerequisites
 
 + [PowerShell 7.4](https://learn.microsoft.com/powershell/scripting/install/installing-powershell?view=powershell-7.4) 
++ [Azurite](https://learn.microsoft.com/azure/storage/common/storage-use-azurite) (for local storage emulation)
 + [Azure Functions Core Tools](https://learn.microsoft.com/azure/azure-functions/functions-run-local?pivots=programming-language-powershell#install-the-azure-functions-core-tools)
 + [Azure Developer CLI (`azd`)](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd)
 + To use Visual Studio Code to run and debug locally:
@@ -48,25 +49,20 @@ You can initialize a project from this `azd` template in one of these ways:
     git clone https://github.com/Azure-Samples/functions-quickstart-powershell-azd.git
     cd functions-quickstart-powershell-azd
     ```
+## Local settings
 
-## Prepare your local environment
+The `local.settings.json` file is included in the `src` folder with default values for local development. This file is excluded from deployment by `.funcignore`.
 
-Navigate to the `src` app folder and create a file in that folder named _local.settings.json_ that contains this JSON data:
-
-```json
-{
-  "IsEncrypted": false,
-  "Values": {
-    "FUNCTIONS_WORKER_RUNTIME": "powershell",
-    "FUNCTIONS_WORKER_RUNTIME_VERSION": "7.4",
-    "AzureWebJobsStorage": "UseDevelopmentStorage=true"
-  }
-}
-```
 
 ## Run your app from the terminal
 
-1. From the `src` folder, run this command to start the Functions host locally:
+1. Start Azurite for local storage emulation. In a separate terminal, run:
+
+    ```shell
+    azurite
+    ```
+
+1. From the `src` folder, run this command to start the Functions host:
 
     ```shell
     func start

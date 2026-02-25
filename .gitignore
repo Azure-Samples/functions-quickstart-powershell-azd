@@ -417,7 +417,6 @@ __azurite_db*__.json
 bin
 obj
 appsettings.json
-local.settings.json
 
 # Java files
 target/
