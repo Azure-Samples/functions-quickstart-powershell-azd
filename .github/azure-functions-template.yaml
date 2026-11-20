@@ -1,0 +1,10 @@
+# This descriptor drives template package creation in the packaging pipeline.
+schemaVersion: 1
+identity: Azure.Functions.Templates.HttpPowerShell
+description: Create a PowerShell Azure Functions app for HTTP Trigger, with Bicep infrastructure for deployment using azd.
+projects:
+- name: Azure Functions HTTP Trigger (PowerShell)
+  shortName: functions-quickstart-powershell-http
+  root: .
+  stack: powershell
+  language: PowerShell
